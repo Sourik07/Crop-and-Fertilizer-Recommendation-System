@@ -1,4 +1,6 @@
 # Crop-and-Fertilizer-Recommendation-System
+![Agritech-strategy-questions-to-ask-before-product-launch_featured](https://github.com/Sourik07/Crop-and-Fertilizer-Recommendation-System/assets/113095592/18657c2f-4d9f-4c69-95fb-629e96334038)
+
 
 The global economy's reliance on crop yield underscores its paramount significance. In
 contemporary contexts, proactively estimating yields has become imperative for effective surplus
