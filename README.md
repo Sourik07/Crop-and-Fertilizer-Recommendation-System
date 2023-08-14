@@ -45,5 +45,12 @@ Model Used:
 • KNN Classifier
 
 Screenshot:
-![image](https://github.com/Sourik07/Crop-and-Fertilizer-Recommendation-System/assets/113095592/090080a5-689e-4603-b4d5-c5c2c612cf80)
+
+
+![image](https://github.com/Sourik07/Crop-and-Fertilizer-Recommendation-System/assets/113095592/22fd476f-252d-40dc-a090-4e240cd7deee)
+
+
+
+![image](https://github.com/Sourik07/Crop-and-Fertilizer-Recommendation-System/assets/113095592/b413af5d-2e0b-44f9-b224-34ed6143ca30)
+
 
