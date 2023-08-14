@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Crop Yield and Fertilizer Prediction Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <script>
+      async function makeAPICall() {
+        event.preventDefault() // Prevent form submission
+
+        // Get form values
+        var nitrogen = document.getElementById("nitrogen").value
+        var phosphorous = document.getElementById("phosphorus").value
+        var potassium = document.getElementById("potassium").value
+        var temperature = document.getElementById("temperature").value
+        var humidity = document.getElementById("humidity").value
+        var moisture = document.getElementById("moisture").value
+        var rainfall = document.getElementById("rainfall").value
+        var phLevel = document.getElementById("phLevel").value
+        var fertilizerPrediction = document.getElementById(
+          "fertilizerPrediction"
+        )
+        var cropPrediction = document.getElementById("cropPrediction")
+
+        // Fertilizer Prediction
+        try {
+          var response = await fetch(
+            `http://127.0.0.1:5000/fertilizer?temperature=${temperature}&humidity=${humidity}&moisture=${moisture}&nitrogen=${nitrogen}&potassium=${potassium}&phosphorous=${phosphorous}`
+          )
+
+          if (response.ok) {
+            // API call succeeded
+            var data = await response.json()
+            console.log(data.prediction)
+            fertilizerPrediction.textContent = `Recommended Fertilizer : ${data.prediction}`
+            // You can perform additional actions here, such as updating the UI or displaying a success message
+          } else {
+            // API call failed
+            console.log("Error:", response.status)
+            fertilizerPrediction.textContent =
+              "Error!!! Please enter data correctly!"
+
+            // You can display an error message or perform other error handling tasks
+          }
+        } catch (error) {
+          // Handle error with the request or parsing the response
+          console.log("Error:", error)
+        }
+
+        // Crop Prediction
+        try {
+          var response = await fetch(
+            `http://127.0.0.1:5000/crop?temperature=${temperature}&humidity=${humidity}&moisture=${moisture}&nitrogen=${nitrogen}&potassium=${potassium}&phosphorous=${phosphorous}&rainfall=${rainfall}&ph_level=${phLevel}`
+          )
+
+          if (response.ok) {
+            // API call succeeded
+            var data = await response.json()
+            console.log(data)
+            cropPrediction.textContent = `Recommended Crop : ${data.prediction}`
+            // You can perform additional actions here, such as updating the UI or displaying a success message
+          } else {
+            // API call failed
+            console.log("Error:", response.status)
+            cropPrediction.textContent = ""
+
+            // You can display an error message or perform other error handling tasks
+          }
+        } catch (error) {
+          // Handle error with the request or parsing the response
+          console.log("Error:", error)
+        }
+        // Show the popup
+        document.getElementById("resultPopup").classList.add("open")
+      }
+
+      function closePopup() {
+        // Hide the popup
+        document.getElementById("resultPopup").classList.remove("open")
+      }
+    </script>
+
+    <div class="container">
+      <div class="data-container">
+        <div class="heading">
+          <h2>Crop Yield and Fertilizer Prediction</h2>
+        </div>
+        <div class="content">
+          <p>
+            Presently, the available methods for soil analysis involve sending
+            samples to laboratories for testing, which is both time-consuming
+            and expensive. Additionally, determining the most suitable
+            fertilizer or treatment options can be complex and challenging for
+            many farmers. To address these challenges, SoilSense offers an
+            innovative solution for selecting the most suitable type of
+            fertilizer based on environmental factors. This system provides
+            accurate and personalized fertilizer recommendations, contributing
+            to enhanced crop yield and sustainable agriculture. It has the
+            potential to revolutionize fertilizer management practices,
+            facilitating efficient resource allocation and promoting
+            environmentally conscious farming techniques to make informed
+            decisions.
+          </p>
+        </div>
+      </div>
+      <form>
+        <div class="form-container">
+          <label for="nitrogen">Nitrogen (in ratio):</label>
+          <input type="number" id="nitrogen" step="1" required /><br />
+
+          <label for="phosphorus">Phosphorus (in ratio):</label>
+          <input type="number" id="phosphorus" step="1" required /><br />
+
+          <label for="potassium">Potassium (in ratio):</label>
+          <input type="number" id="potassium" step="1" required /><br />
+
+          <label for="temperature">Temperature (in &deg;C) </label>
+          <input type="number" id="temperature" step="1" required /><br />
+
+          <label for="humidity">Humidity (in %):</label>
+          <input type="number" id="humidity" step="1" required /><br />
+
+          <label for="rainfall">Average Rainfall (in mm):</label>
+          <input type="number" id="rainfall" step="1" required /><br />
+
+          <label for="moisture"
+            >Moisture Level (% water content in soil):</label
+          >
+          <input type="number" id="moisture" step="1" required /><br />
+
+          <label for="phLevel">PH Value (between 0-14):</label>
+          <input type="number" id="phLevel" step="1" required /><br />
+
+          <button type="button" onclick="makeAPICall()">RECOMMEND</button>
+        </div>
+      </form>
+
+      <div class="popup" id="resultPopup">
+        <div class="popup-content">
+          <h1>RESULTS</h1>
+          <p id="fertilizerPrediction"></p>
+          <p id="cropPrediction"></p>
+          <button class="button_close" onclick="closePopup()">Close</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
